@@ -13,9 +13,15 @@ namespace dotnet_rpg.Controllers
         new Character {Name = "Sam"}
     };
 
+    [Route("GetAll")]
     public IActionResult Get()
     {
       return Ok(characters);
+    }
+
+    public IActionResult GetSingle()
+    {
+      return Ok(characters[0]);
     }
   }
 }
