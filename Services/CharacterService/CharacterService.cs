@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using dotnet_rpg.Dtos.Character;
 using dotnet_rpg.Models;
 
@@ -13,6 +14,13 @@ namespace dotnet_rpg.Services.CharacterService
         new Character {Id = 1, Name = "Sam"},
         new Character {Id = 2 , Name = "Bilbo"}
     };
+    private readonly IMapper _mapper;
+
+    public CharacterService(IMapper mapper)
+    {
+      _mapper = mapper;
+
+    }
     public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
     {
       ServiceResponse<List<GetCharacterDto>> serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
