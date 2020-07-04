@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,15 +50,23 @@ namespace dotnet_rpg.Services.CharacterService
     public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
     {
       ServiceResponse<GetCharacterDto> serviceResponse = new ServiceResponse<GetCharacterDto>();
-      Character character = characters.FirstOrDefault(person => person.Id == updatedCharacter.Id);
-      character.Name = updatedCharacter.Name;
-      character.Class = updatedCharacter.Class;
-      character.Defense = updatedCharacter.Defense;
-      character.Strength = updatedCharacter.Strength;
-      character.HitPoints = updatedCharacter.HitPoints;
-      character.Intelligence = updatedCharacter.Intelligence;
+      try
+      {
+        Character character = characters.FirstOrDefault(person => person.Id == updatedCharacter.Id);
+        character.Name = updatedCharacter.Name;
+        character.Class = updatedCharacter.Class;
+        character.Defense = updatedCharacter.Defense;
+        character.Strength = updatedCharacter.Strength;
+        character.HitPoints = updatedCharacter.HitPoints;
+        character.Intelligence = updatedCharacter.Intelligence;
 
-      serviceResponse.Data = _mapper.Map<GetCharacterDto>(character); ;
+        serviceResponse.Data = _mapper.Map<GetCharacterDto>(character); ;
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
       return serviceResponse;
     }
   }
