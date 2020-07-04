@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using dotnet_rpg.Dtos;
 using dotnet_rpg.Dtos.Character;
 using dotnet_rpg.Models;
 
@@ -42,6 +43,21 @@ namespace dotnet_rpg.Services.CharacterService
     {
       ServiceResponse<GetCharacterDto> serviceResponse = new ServiceResponse<GetCharacterDto>();
       serviceResponse.Data = _mapper.Map<GetCharacterDto>(characters.FirstOrDefault(person => person.Id == id));
+      return serviceResponse;
+    }
+
+    public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+    {
+      ServiceResponse<GetCharacterDto> serviceResponse = new ServiceResponse<GetCharacterDto>();
+      Character character = characters.FirstOrDefault(person => person.Id == updatedCharacter.Id);
+      character.Name = updatedCharacter.Name;
+      character.Class = updatedCharacter.Class;
+      character.Defense = updatedCharacter.Defense;
+      character.Strength = updatedCharacter.Strength;
+      character.HitPoints = updatedCharacter.HitPoints;
+      character.Intelligence = updatedCharacter.Intelligence;
+
+      serviceResponse.Data = _mapper.Map<GetCharacterDto>(character); ;
       return serviceResponse;
     }
   }
